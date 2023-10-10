@@ -1,4 +1,4 @@
-package sample.test.kiosk;
+package sample.test.kiosk.spring;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
