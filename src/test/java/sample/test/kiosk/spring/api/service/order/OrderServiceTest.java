@@ -203,6 +203,33 @@ class OrderServiceTest {
 
     @DisplayName("재고가 부족한 상품으로 주문을 생성하려는 경우 예외가 발생한다.")
     @Test
+    void createOrderWithNoStock() {
+        // given
+        LocalDateTime now = LocalDateTime.now();
+
+        Product product1 = createProduct(BOTTLE, "001", 1000);
+        Product product2 = createProduct(BAKERY, "002", 3000);
+        Product product3 = createProduct(HANDMADE, "003", 5000);
+        productRepository.saveAll(List.of(product1, product2, product3));
+
+        Stock stock1 = Stock.create("001", 2);
+        Stock stock2 = Stock.create("002", 2);
+        stock1.deductQuantity(1); // 테스트 하고자 하는 대상은 주문 생성인데 재고 감소라는 행위가 추가되면 맥락을 이해하기 어려워진다.
+        stockRepository.saveAll(List.of(stock1, stock2));
+
+
+        OrderCreateRequest request = OrderCreateRequest.builder()
+                .productNumbers(List.of("001", "001", "002", "003"))
+                .build();
+
+        // when & then
+        Assertions.assertThatThrownBy(() -> orderService.createOrder(request, now))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("재고가 부족한 상품이 있습니다.");
+    }
+
+    @DisplayName("재고가 부족한 상품으로 주문을 생성하려는 경우 예외가 발생한다.")
+    @Test
     void createOrderWithNoStock2() {
         // given
         LocalDateTime now = LocalDateTime.now();
