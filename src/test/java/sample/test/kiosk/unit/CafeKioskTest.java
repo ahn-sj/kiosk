@@ -1,5 +1,7 @@
 package sample.test.kiosk.unit;
 
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import sample.test.kiosk.unit.beverage.Americano;
 import sample.test.kiosk.unit.beverage.Latte;
@@ -21,6 +23,7 @@ class CafeKioskTest {
         System.out.println(">>> 담긴 음료: " + cafeKiosk.getBeverages().get(0).getName());
     }
 
+    @DisplayName("음료 1개를 주문하면 주문 목록을 담긴다.")
     @Test
     void add() {
         CafeKiosk cafeKiosk = new CafeKiosk();
@@ -47,7 +50,7 @@ class CafeKioskTest {
         CafeKiosk cafeKiosk = new CafeKiosk();
         Americano americano = new Americano();
 
-        assertThatThrownBy(() -> cafeKiosk.add(americano, 0))
+        Assertions.assertThatThrownBy(() -> cafeKiosk.add(americano, 0))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("음료는 1잔 이상 주문하실 수 있습니다.");
     }
