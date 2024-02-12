@@ -51,7 +51,7 @@ class ProductServiceTest {
                 .build();
 
         // when:
-        productService.createProduct(request);
+        productService.createProduct(request.toServiceRequest());
 
         // then:
         final List<Product> products = productRepository.findAll();
@@ -76,7 +76,7 @@ class ProductServiceTest {
                 .build();
 
         // when:
-        productService.createProduct(request);
+        productService.createProduct(request.toServiceRequest());
 
         // then:
         final List<Product> products = productRepository.findAll();

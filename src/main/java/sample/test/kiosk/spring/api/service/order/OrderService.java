@@ -3,7 +3,6 @@ package sample.test.kiosk.spring.api.service.order;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import sample.test.kiosk.spring.api.controller.order.request.OrderCreateRequest;
 import sample.test.kiosk.spring.api.service.order.response.OrderResponse;
 import sample.test.kiosk.spring.domain.order.Order;
 import sample.test.kiosk.spring.domain.order.OrderRepository;
@@ -28,7 +27,7 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final StockRepository stockRepository;
 
-    public OrderResponse createOrder(final OrderCreateRequest request, LocalDateTime registeredDateTime) {
+    public OrderResponse createOrder(final OrderCreateServiceRequest request, LocalDateTime registeredDateTime) {
 
         List<String> productNumbers = request.getProductNumbers();
         List<Product> products = findProductsBy(productNumbers);

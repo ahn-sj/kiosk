@@ -3,6 +3,7 @@ package sample.test.kiosk.spring.api.service.product;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import sample.test.kiosk.spring.api.controller.product.dto.request.ProductCreateRequest;
+import sample.test.kiosk.spring.api.service.product.request.ProductCreateServiceRequest;
 import sample.test.kiosk.spring.api.service.product.response.ProductResponse;
 import sample.test.kiosk.spring.domain.product.Product;
 import sample.test.kiosk.spring.domain.product.ProductRepository;
@@ -25,7 +26,7 @@ public class ProductService {
                 .collect(Collectors.toList());
     }
 
-    public ProductResponse createProduct(final ProductCreateRequest request) {
+    public ProductResponse createProduct(final ProductCreateServiceRequest request) {
         // productNumber: 001 002 003 ...
         // db에서 마지막 저장된 productNumber의 상품 번호를 읽어와서 +1
         final String nextProductNumber = createNextProductNumber();

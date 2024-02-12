@@ -111,7 +111,7 @@ class OrderServiceTest {
         OrderCreateRequest request = OrderCreateRequest.builder().productNumbers(List.of("001", "002")).build();
 
         // when
-        OrderResponse orderResponse = orderService.createOrder(request, now);
+        OrderResponse orderResponse = orderService.createOrder(request.toServiceRequest(), now);
 
         // then
         assertThat(orderResponse.getId()).isNotNull();
@@ -141,7 +141,7 @@ class OrderServiceTest {
         OrderCreateRequest request = OrderCreateRequest.builder().productNumbers(List.of("001", "001")).build();
 
         // when
-        OrderResponse orderResponse = orderService.createOrder(request, now);
+        OrderResponse orderResponse = orderService.createOrder(request.toServiceRequest(), now);
 
         // then
         assertThat(orderResponse.getId()).isNotNull();
@@ -177,7 +177,7 @@ class OrderServiceTest {
         OrderCreateRequest request = OrderCreateRequest.builder().productNumbers(List.of("001", "001", "002", "003")).build();
 
         // when
-        OrderResponse orderResponse = orderService.createOrder(request, now);
+        OrderResponse orderResponse = orderService.createOrder(request.toServiceRequest(), now);
 
         // then
         assertThat(orderResponse.getId()).isNotNull();
@@ -223,7 +223,7 @@ class OrderServiceTest {
                 .build();
 
         // when & then
-        Assertions.assertThatThrownBy(() -> orderService.createOrder(request, now))
+        Assertions.assertThatThrownBy(() -> orderService.createOrder(request.toServiceRequest(), now))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("재고가 부족한 상품이 있습니다.");
     }
@@ -248,7 +248,7 @@ class OrderServiceTest {
         OrderCreateRequest request = OrderCreateRequest.builder().productNumbers(List.of("001", "001", "002", "003")).build();
 
         // when & then
-        Assertions.assertThatThrownBy(() -> orderService.createOrder(request, now))
+        Assertions.assertThatThrownBy(() -> orderService.createOrder(request.toServiceRequest(), now))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("재고가 부족한 상품이 있습니다.");
     }

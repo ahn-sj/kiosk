@@ -4,7 +4,7 @@ package sample.test.kiosk.spring.api.controller.product.dto.request;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import sample.test.kiosk.spring.domain.product.Product;
+import sample.test.kiosk.spring.api.service.product.request.ProductCreateServiceRequest;
 import sample.test.kiosk.spring.domain.product.ProductSellingStatus;
 import sample.test.kiosk.spring.domain.product.ProductType;
 
@@ -36,9 +36,8 @@ public class ProductCreateRequest {
         this.price = price;
     }
 
-    public Product toEntity(final String nextProductNumber) {
-        return Product.builder()
-                .productNumber(nextProductNumber)
+    public ProductCreateServiceRequest toServiceRequest() {
+        return ProductCreateServiceRequest.builder()
                 .type(type)
                 .sellingStatus(sellingStatus)
                 .name(name)
