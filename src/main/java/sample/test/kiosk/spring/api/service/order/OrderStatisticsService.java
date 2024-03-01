@@ -18,13 +18,14 @@ public class OrderStatisticsService {
     private final OrderRepository orderRepository;
     private final MailService mailService;
 
-    public void sendOrderStatisticsMail(LocalDate orderDate, String email) {
+    // TODO: 해당 일자에 결제 완료된 주문들을 가져와서 총 매출 합계를 계산하여 메일로 전송
+    public boolean sendOrderStatisticsMail(LocalDate orderDate, String email) {
         // 해당 일자에 결제 완료된 주문들을 가져와서
         LocalDateTime startDateTime = orderDate.atStartOfDay();                     // 2023-12-16 -> 2023-12-16 00:00
         LocalDateTime endDateTime = orderDate.plusDays(1).atStartOfDay(); // 2023-12-16 -> 2023-12-17 00:00
         OrderStatus completed = OrderStatus.COMPLETED;
 
-        List<Order> orders = orderRepository.findOrdersBy(startDateTime, endDateTime, completed);
+        final List<Order> orders = orderRepository.findOrdersBy(startDateTime, endDateTime, completed);
 
         // 총 매출 합계를 계산
         int totalAmount = orders.stream()
@@ -42,5 +43,7 @@ public class OrderStatisticsService {
         if(!result) {
             throw new IllegalArgumentException("매출 통계 메일 전송에 실패했습니다.");
         }
+
+        return true;
     }
 }

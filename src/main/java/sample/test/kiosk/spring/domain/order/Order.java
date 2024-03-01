@@ -1,8 +1,10 @@
 package sample.test.kiosk.spring.domain.order;
 
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.util.Assert;
 import sample.test.kiosk.spring.domain.BaseEntity;
 import sample.test.kiosk.spring.domain.orderproduct.OrderProduct;
 import sample.test.kiosk.spring.domain.product.Product;
@@ -32,8 +34,12 @@ public class Order extends BaseEntity {
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderProduct> orderProducts = new ArrayList<>();
 
-    public Order(final List<Product> products, LocalDateTime registeredDateTime) {
-        this.orderStatus = OrderStatus.INIT;
+    @Builder
+    private Order(final List<Product> products, final OrderStatus orderStatus, LocalDateTime registeredDateTime) {
+        Assert.notNull(orderProducts, "OrderProducts must not be null");
+        Assert.notNull(orderStatus, "OrderStatus must not be null");
+        Assert.notNull(registeredDateTime, "RegisteredDateTime must not be null");
+        this.orderStatus = orderStatus;
         this.totalPrice = calculateTotalPrice(products);
         this.registeredDateTime = registeredDateTime;
         this.orderProducts = products.stream()
@@ -46,6 +52,10 @@ public class Order extends BaseEntity {
     }
 
     public static Order create(final List<Product> products, LocalDateTime registeredDateTime) {
-        return new Order(products, registeredDateTime);
+        return Order.builder()
+                .orderStatus(OrderStatus.INIT)
+                .products(products)
+                .registeredDateTime(registeredDateTime)
+                .build();
     }
 }

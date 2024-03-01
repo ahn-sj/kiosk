@@ -11,6 +11,7 @@ public class MailSendClient {
         // 메일 전송
         log.info("메일 전송");
 
-        return true;
+        throw new IllegalArgumentException("메일 전송");
+//         return true;
     }
 }
