@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import sample.test.kiosk.spring.client.mail.MailSendClient;
 import sample.test.kiosk.spring.domain.history.mail.MailSendHistory;
@@ -12,7 +13,7 @@ import sample.test.kiosk.spring.domain.history.mail.MailSendHistoryRepository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.*;
+import static org.mockito.BDDMockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class MailServiceTest {
@@ -36,7 +37,7 @@ class MailServiceTest {
 //        final MailSendHistoryRepository mailSendHistoryRepository = mock(MailSendHistoryRepository.class);
 //        final MailService mailService = new MailService(mailSendClient, mailSendHistoryRepository);
 
-        when(mailSendClient.sendEmail(anyString(), anyString(), anyString(), anyString()))
+        Mockito.when(mailSendClient.sendEmail(anyString(), anyString(), anyString(), anyString()))
                 .thenReturn(true);
 
 
@@ -46,6 +47,25 @@ class MailServiceTest {
         // then:
         verify(mailSendHistoryRepository, times(1)).save(any(MailSendHistory.class));
         assertThat(result).isTrue();
-
     }
+
+    @Test
+    @DisplayName("메일 전송 테스트 - BDD 스타일")
+    void sendMailBdd() {
+
+        // given:
+        // Mockito.when(...)     ->
+        // BDDMockito.given(...) -> 내부 구현이 Mockito.when 로 동작됨. 따라서 given / when / then 절로 작성하므로 BDDMockito.given 을 사용하는 것이 좋음
+        given(mailSendClient.sendEmail(anyString(), anyString(), anyString(), anyString()))
+                .willReturn(true);
+
+        // when:
+        final boolean result = mailService.sendMail("fromEmail", "toEmail", "subject", "content");
+
+        // then:
+        verify(mailSendHistoryRepository, times(1)).save(any(MailSendHistory.class));
+        assertThat(result).isTrue();
+    }
+
+
 }
