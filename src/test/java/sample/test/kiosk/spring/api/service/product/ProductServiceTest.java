@@ -5,10 +5,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
+import sample.test.kiosk.spring.IntegrationTestSupport;
 import sample.test.kiosk.spring.api.controller.product.dto.request.ProductCreateRequest;
-import sample.test.kiosk.spring.api.service.product.response.ProductResponse;
 import sample.test.kiosk.spring.domain.product.Product;
 import sample.test.kiosk.spring.domain.product.ProductRepository;
 import sample.test.kiosk.spring.domain.product.ProductSellingStatus;
@@ -20,9 +18,7 @@ import static org.assertj.core.api.Assertions.tuple;
 import static sample.test.kiosk.spring.domain.product.ProductSellingStatus.SELLING;
 import static sample.test.kiosk.spring.domain.product.ProductSellingStatus.STOP_SELLING;
 
-@ActiveProfiles("test")
-@SpringBootTest
-class ProductServiceTest {
+class ProductServiceTest extends IntegrationTestSupport {
 
     @Autowired
     private ProductService productService;

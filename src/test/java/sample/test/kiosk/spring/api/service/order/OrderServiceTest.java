@@ -2,13 +2,10 @@ package sample.test.kiosk.spring.api.service.order;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.transaction.annotation.Transactional;
+import sample.test.kiosk.spring.IntegrationTestSupport;
 import sample.test.kiosk.spring.api.controller.order.request.OrderCreateRequest;
 import sample.test.kiosk.spring.api.service.order.response.OrderResponse;
 import sample.test.kiosk.spring.domain.order.OrderRepository;
@@ -28,10 +25,7 @@ import static org.assertj.core.groups.Tuple.tuple;
 import static sample.test.kiosk.spring.domain.product.ProductSellingStatus.SELLING;
 import static sample.test.kiosk.spring.domain.product.ProductType.*;
 
-@ActiveProfiles("test")
-@SpringBootTest
-//@Transactional
-class OrderServiceTest {
+class OrderServiceTest extends IntegrationTestSupport {
 
     @Autowired
     private ProductRepository productRepository;

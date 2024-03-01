@@ -1,15 +1,10 @@
 package sample.test.kiosk.spring.api.controller.product;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
+import sample.test.kiosk.spring.ControllerTestSupport;
 import sample.test.kiosk.spring.api.controller.product.dto.request.ProductCreateRequest;
-import sample.test.kiosk.spring.api.service.product.ProductService;
 import sample.test.kiosk.spring.api.service.product.response.ProductResponse;
 import sample.test.kiosk.spring.domain.product.ProductSellingStatus;
 import sample.test.kiosk.spring.domain.product.ProductType;
@@ -23,21 +18,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(controllers = ProductController.class) // 테스트 하고자 하는 Controller에 대해서만 Bean으로 등록
-class ProductControllerTest {
+class ProductControllerTest extends ControllerTestSupport {
 
     // lib: mockito - mocking framework
     // - @Mock
     // - @MockBean
-
-    @Autowired
-    private MockMvc mockMvc;
-
-    @Autowired
-    private ObjectMapper objectMapper;
-
-    @MockBean
-    private ProductService productService;
 
     @Test
     @DisplayName("신규 상품을 등록한다.")

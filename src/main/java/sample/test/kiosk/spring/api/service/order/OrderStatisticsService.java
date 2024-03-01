@@ -20,7 +20,6 @@ public class OrderStatisticsService {
 
     // TODO: 해당 일자에 결제 완료된 주문들을 가져와서 총 매출 합계를 계산하여 메일로 전송
     public boolean sendOrderStatisticsMail(LocalDate orderDate, String email) {
-        // 해당 일자에 결제 완료된 주문들을 가져와서
         LocalDateTime startDateTime = orderDate.atStartOfDay();                     // 2023-12-16 -> 2023-12-16 00:00
         LocalDateTime endDateTime = orderDate.plusDays(1).atStartOfDay(); // 2023-12-16 -> 2023-12-17 00:00
         OrderStatus completed = OrderStatus.COMPLETED;
